@@ -14,21 +14,18 @@
  * Domain Path:       /languages
  */
 
-// If this file is called directly, abort.
-if (!defined('WPINC')) {
-    die;
-}
 
-/**
- * Currently plugin version.
- */
-define('PIEPAGINA_VERSION', '1.0.0');
+
+if (!defined('ABSPATH')) {
+    // good reference: https://wordpress.stackexchange.com/questions/108418/what-are-the-differences-between-wpinc-and-abspath
+    die; // Exit if accessed directly
+}
 
 /**
  * The code that runs during plugin activation.
  */
 function activate_piepagina() {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-piepagina-activator.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/Piepagina-activator.php';
     Piepagina_Activator::activate();
 }
 
@@ -36,7 +33,7 @@ function activate_piepagina() {
  * The code that runs during plugin deactivation.
  */
 function deactivate_piepagina() {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-piepagina-deactivator.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/Piepagina-deactivator.php';
     Piepagina_Deactivator::deactivate();
 }
 
@@ -47,13 +44,14 @@ register_deactivation_hook(__FILE__, 'deactivate_piepagina');
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path(__FILE__) . 'includes/class-piepagina.php';
+require_once plugin_dir_path(__FILE__) . 'includes/Piepagina.php';
 
 /**
  * Begins execution of the plugin.
  */
 function run_piepagina() {
-    $plugin = new Piepagina();
-    $plugin->run();
+    $piepagina = Piepagina::getInstance();
+    $piepagina->run();
 }
+
 run_piepagina();

@@ -20,7 +20,14 @@ class Piepagina
     protected $version;
 
     /**
-     * Define the core functionality of the plugin.
+     * Static property for singleton
+     */
+    static $instance = false;
+
+    /**
+     * Constructor for Piepagina
+     * 
+     * @return void
      */
     public function __construct()
     {
@@ -31,6 +38,18 @@ class Piepagina
         $this->set_locale();
         $this->define_admin_hooks();
         $this->define_public_hooks();
+    }
+
+    /**
+     * Singleton instance retriever
+     * 
+     * @return Piepagina
+     */
+    public static function getInstance()
+    {
+        if(!self::$instance)
+            self::$instance = new self;
+        return self::$instance;
     }
 
     /**
